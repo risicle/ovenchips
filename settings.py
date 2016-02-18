@@ -138,6 +138,7 @@ if DEBUG:
     CSP_IMG_SRC += ("*.placehold.it",)
 
 CRISPY_TEMPLATE_PACK = 'foundation-5'
+CRISPY_ALLOWED_TEMPLATE_PACKS = (CRISPY_TEMPLATE_PACK,)
 
 AUTH_USER_MODEL = 'djangae.GaeUser'
 
