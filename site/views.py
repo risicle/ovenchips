@@ -47,6 +47,11 @@ class ProjectListView(ListView):
     model = Project
     template_name = "site/project_list.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(ProjectListView, self).get_context_data(**kwargs)
+        context["reordered_object_list"] = sorted(context["object_list"], key=lambda project: (project.tickets.filter(assignees=self.request.user.pk).exists(), project.pk), reverse=True)
+        return context
+
 
 project_list_view = ProjectListView.as_view()
 

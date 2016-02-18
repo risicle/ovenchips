@@ -12,7 +12,7 @@
 				</tr>
 			</thead>
 			<tbody>
-				{% for project in object_list %}
+				{% for project in reordered_object_list %}
 				<tr>
 					<td><a href="{% url "project-detail" project_id=project.pk %}">{{ project.title }}</a></td>
 					<td>{{ project.tickets.count }}</a></td>
