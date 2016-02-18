@@ -10,7 +10,7 @@
 			<thead>
 				<tr>
 					<th width="1200">Title</th>
-					<th width="1200">Assigned</th>
+					<th>Assignees</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -21,6 +21,8 @@
 					<td>
 					{% for user in ticket.assignees.all %}
 						{{ user.email }}{% if not forloop.last %},{% endif %}
+					{% empty %}
+						<em>No assignees</em>
 					{% endfor %}
 					</td>
 					<td>
