@@ -49,7 +49,8 @@ class TicketForm(BaseTrackerForm):
         fields = ('title', 'description', 'assignees',)
 
     def __init__(self, project=None, *args, **kwargs):
-        self.project = project
+        # if we have no project specified we must at least have a pre-existing instance
+        self.project = project or kwargs["instance"].project
         super(TicketForm, self).__init__(*args, **kwargs)
 
 
