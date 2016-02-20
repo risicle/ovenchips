@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth import get_user_model
 
-from crispy_forms_foundation.forms import FoundationModelForm
+from crispy_forms_foundation.forms import FoundationForm, FoundationModelForm
 
 from .models import Project, Ticket
 
@@ -60,3 +60,13 @@ class TicketForm(BaseTrackerForm):
     def pre_save(self, instance):
         instance.created_by = self.user
         instance.project = self.project
+
+class DeleteTicketDummyForm(FoundationForm):
+    # this is a "dummy" form with no fields that we use to let crispy render our "form"
+    # for us (particularly the submit button) in the same style as on other pages
+    submit = "Delete"
+    
+    def __init__(self, title=None, *args, **kwargs):
+        if title is not None:
+            self.title = title
+        super(DeleteTicketDummyForm, self).__init__(self, *args, **kwargs)

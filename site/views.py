@@ -1,9 +1,10 @@
 from django.core.urlresolvers import reverse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-from django.views.generic import TemplateView, CreateView, UpdateView, ListView
+from django.views.generic import TemplateView, CreateView, UpdateView, ListView, DeleteView
+from django.views.generic.edit import FormMixin
 
-from .forms import ProjectForm, TicketForm
+from .forms import ProjectForm, TicketForm, DeleteTicketDummyForm
 from .models import Project, Ticket
 
 
@@ -145,3 +146,20 @@ class UpdateTicketView(ProjectContextMixin, UpdateView):
 
 
 update_ticket_view = login_required(UpdateTicketView.as_view())
+
+
+class DeleteTicketView(ProjectContextMixin, DeleteView):
+    model = Ticket
+    pk_url_kwarg = 'ticket_id'
+    template_name = "site/ticket_delete.html"
+    
+    def get_success_url(self):
+        return reverse("project-detail", kwargs={"project_id": self.kwargs['project_id']})
+
+    def get_context_data(self, **kwargs):
+        context = super(DeleteTicketView, self).get_context_data(**kwargs)
+        context["form"] = DeleteTicketDummyForm (title="Delete Ticket \"%s\"" % self.object.title)
+        return context
+
+
+delete_ticket_view = login_required(DeleteTicketView.as_view())
