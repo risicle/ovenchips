@@ -41,6 +41,13 @@ class ProjectForm(BaseTrackerForm):
         instance.created_by = self.user
 
 class AssigneeMultipleChoiceField(forms.ModelMultipleChoiceField):
+    def __init__(self, **kwargs):
+        kwargs["widget"] = kwargs.get("widget") or forms.SelectMultiple(attrs={"class":"chosen-select"})
+        super(AssigneeMultipleChoiceField, self).__init__(**kwargs)
+        # django 1.7 still has this stupid behaviour with ModelMultipleChoiceField and its automatic
+        # help_text which needs to be overridden in this rather nasty way
+        self.help_text = ""
+
     def label_from_instance(self, instance):
         return instance.email
 
