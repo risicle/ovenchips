@@ -1,7 +1,6 @@
 *.pyc
 .storage
 bower_components
-index.yaml
 node_modules
 sitepackages
 tracker/static
