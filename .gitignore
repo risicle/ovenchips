@@ -4,3 +4,6 @@ bower_components
 index.yaml
 node_modules
 sitepackages
+tracker/static
+tracker/static-dev/components
+tracker/static-dev/css
