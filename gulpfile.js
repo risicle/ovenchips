@@ -30,7 +30,7 @@ gulp.task('concat-js', function() {
 			baseSrcDir + '/components/fastclick/lib/fastclick.js',
 			baseSrcDir + '/components/jquery/dist/jquery.min.js',
 			baseSrcDir + '/components/chosen/chosen.jquery.js',
-			baseSrcDir + '/components/foundation/js/foundation/foundation.min.js',
+			baseSrcDir + '/components/foundation/js/foundation.min.js',
 			baseSrcDir + '/js/app.js'
 		])
 		.pipe(concat('app.built.js'))
