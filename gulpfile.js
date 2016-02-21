@@ -5,8 +5,10 @@ var concat = require('gulp-concat');
 var baseSrcDir = 'tracker/static-dev';
 var baseDestDir = 'tracker/static';
 
+var scssGlob = baseSrcDir + '/scss/*.scss';
+
 gulp.task('sass', function () {
-    gulp.src(baseSrcDir + '/scss/*.scss')
+    gulp.src(scssGlob)
         .pipe(sass())
         .pipe(gulp.dest(baseSrcDir + '/css'));
 });
@@ -46,3 +48,7 @@ gulp.task('copy-js', function () {
 
 gulp.task('build', ['build-styles', 'copy-styles', 'copy-js', 'concat-js'])
 gulp.task('default', ['build-styles']);
+
+gulp.task('watch-styles', function () {
+	gulp.watch(scssGlob, ['build-styles']);
+});
