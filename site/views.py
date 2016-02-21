@@ -110,8 +110,14 @@ class ProjectView(ProjectContextMixin, TemplateView):
 project_view = ProjectView.as_view()
 
 
-class CreateTicketView(ProjectContextMixin, CreateView):
+class TicketProjectContextMixin(ProjectContextMixin):
     model = Ticket
+    
+    def get_queryset(self):
+        return super(TicketProjectContextMixin, self).get_queryset().filter(project=self.get_project())
+
+
+class CreateTicketView(TicketProjectContextMixin, CreateView):
     form_class = TicketForm
     template_name = "site/ticket_form.html"
 
@@ -129,8 +135,7 @@ class CreateTicketView(ProjectContextMixin, CreateView):
 create_ticket_view = login_required(CreateTicketView.as_view())
 
 
-class UpdateTicketView(ProjectContextMixin, UpdateView):
-    model = Ticket
+class UpdateTicketView(TicketProjectContextMixin, UpdateView):
     form_class = TicketForm
     pk_url_kwarg = 'ticket_id'
     template_name = "site/ticket_form.html"
@@ -148,8 +153,7 @@ class UpdateTicketView(ProjectContextMixin, UpdateView):
 update_ticket_view = login_required(UpdateTicketView.as_view())
 
 
-class DeleteTicketView(ProjectContextMixin, DeleteView):
-    model = Ticket
+class DeleteTicketView(TicketProjectContextMixin, DeleteView):
     pk_url_kwarg = 'ticket_id'
     template_name = "site/ticket_delete.html"
     
